@@ -6,6 +6,9 @@ angular.module('angularfireSlackApp')
     // getting the current user's email from the auth data that was resolved from our router, hashing it and setting to emailHash on profile.
     profileCtrl.updateProfile = function(){
       profileCtrl.profile.emailHash = md5.createHash(auth.password.email);
-      profileCtrl.profile.$save();
+      profileCtrl.profile.$save().then(function(){
+        // send the user to the channels state after a successful save.
+        $state.go('channels')
+      });
     };
   });
